@@ -18,7 +18,7 @@
 
         // Function to send the captured image to the server
         function sendImage(dataURL) {
-            fetch('/upload', {
+            fetch('/api/sendPhoto', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
