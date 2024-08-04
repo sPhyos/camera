@@ -12,12 +12,10 @@ export default async function handler(req, res) {
 
     const { image } = req.body;
 
-    // Decode the base64 image and save it as a file
     const base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
-    const filePath = '/tmp/image.jpg'; // Vercel function can write to /tmp directory
+    const filePath = '/tmp/image.jpg'; 
     fs.writeFileSync(filePath, base64Data, 'base64');
 
-    // Prepare the image for sending to Telegram
     const formData = new FormData();
     formData.append('chat_id', CHAT_ID);
     formData.append('photo', fs.createReadStream(filePath));
