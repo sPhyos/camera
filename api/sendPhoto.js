@@ -33,6 +33,7 @@ export default async function handler(req, res) {
 
         // List the contents of the /tmp directory
         exec('ls -la /tmp', async (error, stdout, stderr) => {
+            console.log("lls")
             if (error) {
                 console.error(`Error listing directory contents: ${error}`);
                 return res.status(500).json({ status: 'error', message: 'Error listing directory contents' });
